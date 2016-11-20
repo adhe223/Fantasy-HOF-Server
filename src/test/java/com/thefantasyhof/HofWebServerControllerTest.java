@@ -23,7 +23,7 @@ public class HofWebServerControllerTest {
     private MockMvc mvc;
 
     @Test
-    public void getHello() throws Exception {
+    public void getIndexReponse() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
