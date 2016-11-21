@@ -29,9 +29,8 @@ public class DataConsumer {
             JSONArray matchups = seasonInfo.getJSONArray("matchups");
             this.iterateMatchupsAndStore(matchups, false);
 
-            //TODO: Firgure out what is wrong with the Node.js parsing of the 2009 playoffs matchup between Densign and Cullen
-            //JSONArray playoffMatchups = seasonInfo.getJSONArray("playoffMatchups");
-            //this.iterateMatchupsAndStore(playoffMatchups, true);
+            JSONArray playoffMatchups = seasonInfo.getJSONArray("playoffMatchups");
+            this.iterateMatchupsAndStore(playoffMatchups, true);
         }
     }
 
