@@ -1,20 +1,69 @@
 package com.thefantasyhof;
+import com.thefantasyhof.ModelObjects.Matchup;
 import com.thefantasyhof.ModelObjects.Owner;
 import org.json.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public class DataConsumer {
     private JSONObject json;
-    private ArrayList<Owner> owners = new ArrayList<Owner>();
+    private Map<String, Owner> owners = new HashMap<String, Owner>();
 
     public DataConsumer(String JSONData) {
         this.json = new JSONObject(JSONData);
+        this.populateOwnersArray();
     }
 
-    public void tabulateMatchupStats() {
+    public void tabulateMatchupData() {
+        // Iterate over all the matchups for each season (including playoffs) and tabulate the data
+        JSONObject totalSeasonsInfo = this.json.getJSONObject("totalSeasonsInfo");
+        Iterator<String> seasonsKeys = totalSeasonsInfo.keys();
+
+        while (seasonsKeys.hasNext()) {
+            String year = (String)seasonsKeys.next();
+            JSONObject seasonInfo = totalSeasonsInfo.getJSONObject(year);
+
+            JSONArray matchups = seasonInfo.getJSONArray("matchups");
+            this.iterateMatchupsAndStore(matchups, false);
+
+            //TODO: Firgure out what is wrong with the Node.js parsing of the 2009 playoffs matchup between Densign and Cullen
+            //JSONArray playoffMatchups = seasonInfo.getJSONArray("playoffMatchups");
+            //this.iterateMatchupsAndStore(playoffMatchups, true);
+        }
+    }
+
+    private void iterateMatchupsAndStore(JSONArray matchups, Boolean isPlayoffs) {
+        String firstTeamOwnerKey = "awayTeamOwner";
+        String secondTeamOwnerKey = "homeTeamOwner";
+        String firstPointsKey = "awayPoints";
+        String secondPointsKey = "homePoints";
+
+        // Playoffs have different keys in the JSON object
+        if (isPlayoffs) {
+            firstTeamOwnerKey = "firstTeamOwner";
+            secondTeamOwnerKey = "secondTeamOwner";
+            firstPointsKey = "firstPoints";
+            secondPointsKey = "secondPoints";
+        }
+
+        // Iterate over the matchups, create a Matchup object, then add them to the owner's objects
+        for (int i = 0; i < matchups.length(); i++) {
+            // Create matchup object
+            JSONObject matchupJSON = matchups.getJSONObject(i);
+            String awayOwner = matchupJSON.getString(firstTeamOwnerKey);
+            String homeOwner = matchupJSON.getString(secondTeamOwnerKey);
+            Matchup matchup = new Matchup(awayOwner, homeOwner, matchupJSON.getDouble(firstPointsKey), matchupJSON.getDouble(secondPointsKey), isPlayoffs);
+
+            // Add matchup data to the owner's object
+            owners.get(awayOwner).addMatchupData(matchup);
+            owners.get(homeOwner).addMatchupData(matchup);
+        }
+    }
+
+    private void populateOwnersArray() {
         // First populate our owners array
         JSONObject ownersInfo = this.json.getJSONObject("ownerInfo");
         Iterator<String> ownersKeys = ownersInfo.keys();
@@ -22,6 +71,7 @@ public class DataConsumer {
             String name = (String)ownersKeys.next();
             Owner owner = new Owner(name);
 
+            /*
             // Iterate over the seasons the owner has and tabulate the data
             JSONObject seasonsDict = ownersInfo.getJSONObject(name).getJSONObject("seasonsDict");
             Iterator<String> seasonsKeys = seasonsDict.keys();
@@ -37,8 +87,9 @@ public class DataConsumer {
                 double pointsAgainst = season.getDouble("pointsAgainst");
                 owner.addSeasonData(wins, losses, pointsFor, pointsAgainst);
             }
+            */
 
-            owners.add(owner);
+            owners.put(name, owner);
         }
     }
 }
