@@ -16,8 +16,9 @@ public class Owner {
     private double playoffPF = 0;
     private double playoffPA = 0;
     private Map<String, OwnerMatchupSeries> matchupSeries = new HashMap<String, OwnerMatchupSeries>();
-
+    private Map<String, OwnerSeason> seasons = new HashMap<>();
     // </editor-fold>
+
     // <editor-fold desc="Getters/Setters">
     public String getName() {
         return name;
@@ -79,7 +80,19 @@ public class Owner {
     public void setPlayoffPA(double playoffPA) {
         this.playoffPA = playoffPA;
     }
-    // </editor-fold>
+    public Map<String, OwnerMatchupSeries> getMatchupSeries() {
+        return matchupSeries;
+    }
+    public void setMatchupSeries(Map<String, OwnerMatchupSeries> matchupSeries) {
+        this.matchupSeries = matchupSeries;
+    }
+    public Map<String, OwnerSeason> getSeasons() {
+        return seasons;
+    }
+    public void setSeasons(Map<String, OwnerSeason> seasons) {
+        this.seasons = seasons;
+    }
+// </editor-fold>
 
     public Owner(String ownerName) {
         this.name = ownerName;
@@ -96,6 +109,7 @@ public class Owner {
         int win = 0;
         int loss = 0;
         int tie = 0;
+        String year = matchup.getYear();
         boolean isPlayoffs = matchup.getPlayoffs();
         double pointsFor = name.equals(matchup.getHomeOwner()) ? matchup.getHomePoints() : matchup.getAwayPoints();
         double pointsAgainst = name.equals(matchup.getHomeOwner()) ? matchup.getAwayPoints() : matchup.getHomePoints();
@@ -119,6 +133,23 @@ public class Owner {
 
             this.playoffPF += pointsFor;
             this.playoffPA += pointsAgainst;
+        }
+
+        // Add the stats to the owner's corresponding season object (not for playoffs)
+        if (!isPlayoffs) {
+            if (this.seasons.get(year) == null) {
+                // Add an OwnerSeason object to our map
+                this.seasons.put(year, new OwnerSeason(win, loss, tie, year, pointsFor, pointsAgainst));
+            } else {
+                // Add to the OwnerSeason object
+                OwnerSeason ownersSeason = this.seasons.get(year);
+                ownersSeason.setWins(ownersSeason.getWins() + win);
+                ownersSeason.setLosses(ownersSeason.getLosses() + loss);
+                ownersSeason.setTies(ownersSeason.getTies() + tie);
+                ownersSeason.setPointsFor(ownersSeason.getPointsFor() + pointsFor);
+                ownersSeason.setPointsAgainst(ownersSeason.getPointsAgainst() + pointsAgainst);
+                this.seasons.put(year, ownersSeason);
+            }
         }
 
         // Add to the owner matchup series

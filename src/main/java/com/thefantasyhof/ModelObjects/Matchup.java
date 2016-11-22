@@ -6,15 +6,18 @@ public class Matchup {
     private double awayPoints;
     private double homePoints;
     private Boolean isPlayoffs;
+    private String year;
 
-    public Matchup(String awayOwner, String homeOwner, double awayPoints, double homePoints, Boolean isPlayoffs) {
+    public Matchup(String awayOwner, String homeOwner, double awayPoints, double homePoints, Boolean isPlayoffs, String year) {
         this.awayOwner = awayOwner;
         this.homeOwner = homeOwner;
         this.awayPoints = awayPoints;
         this.homePoints = homePoints;
         this.isPlayoffs = isPlayoffs;
+        this.year = year;
     }
 
+    // <editor-fold desc="Getters/Setters">
     public String getAwayOwner() {
         return awayOwner;
     }
@@ -45,6 +48,13 @@ public class Matchup {
     public void setPlayoffs(Boolean playoffs) {
         isPlayoffs = playoffs;
     }
+    public String getYear() {
+        return year;
+    }
+    public void setYear(String year) {
+        this.year = year;
+    }
+    // </editor-fold>
 
     public Boolean hasOwner(String owner) {
         return(awayOwner.equals(owner) || homeOwner.equals(owner));

@@ -29,8 +29,8 @@ public class HofWebServerController {
             IOUtils.copy(response, writer);
             String responseString = writer.toString();
 
-            DataConsumer cd = new DataConsumer(responseString);
-            cd.tabulateMatchupData();
+            DataConsumer dc = new DataConsumer(responseString);
+            dc.tabulateMatchupData();
 
             return responseString;
         } catch (Exception e){ return "HTTP GET Failed!"; }
