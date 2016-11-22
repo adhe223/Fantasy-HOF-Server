@@ -11,7 +11,7 @@ public class LeagueSeason {
     private ArrayList<String> winningestNames= new ArrayList<String>();;
     private int winningestWins = Integer.MIN_VALUE;
     private ArrayList<String> losingestNames = new ArrayList<String>();
-    private int losingestLosses = Integer.MAX_VALUE;
+    private int losingestLosses = Integer.MIN_VALUE;
     private ArrayList<String> highTotalScorerNames = new ArrayList<String>();
     private double highTotalScore = Double.MIN_VALUE;
     private ArrayList<String> lowTotalScorerNames = new ArrayList<String>();
@@ -145,29 +145,32 @@ public class LeagueSeason {
             highScorer = matchup.getHomeOwner();
         }
 
-        // Add the points
-        this.setTotalPoints(this.getTotalPoints() + matchup.getAwayPoints() + matchup.getHomePoints());
+        // Regular season stats
+        if (!matchup.getPlayoffs()) {
+            // Add the points for regular season
+            this.setTotalPoints(this.getTotalPoints() + matchup.getAwayPoints() + matchup.getHomePoints());
 
-        // Lowest single score
-        if (lowScore == this.getLowSingleScore()) {
-            this.getLowSingleScoreNames().add(lowScorer);
-        } else if (lowScore < this.getLowSingleScore()) {
-            this.setLowSingleScore(lowScore);
-            ArrayList<String> lowSingleScorers = this.getLowSingleScoreNames();
-            lowSingleScorers.clear();
-            lowSingleScorers.add(lowScorer);
-            this.setLowSingleScoreNames(lowSingleScorers);
-        }
+            // Lowest single score  (not interesting for playoffs because some leagues do two week playoffs)
+            if (lowScore == this.getLowSingleScore()) {
+                this.getLowSingleScoreNames().add(lowScorer);
+            } else if (lowScore < this.getLowSingleScore()) {
+                this.setLowSingleScore(lowScore);
+                ArrayList<String> lowSingleScorers = this.getLowSingleScoreNames();
+                lowSingleScorers.clear();
+                lowSingleScorers.add(lowScorer);
+                this.setLowSingleScoreNames(lowSingleScorers);
+            }
 
-        // Highest single score
-        if (highScore == this.getHighSingleScore()) {
-            this.getHighSingleScoreNames().add(highScorer);
-        } else if (highScore > this.getHighSingleScore()) {
-            this.setHighSingleScore(highScore);
-            ArrayList<String> highSingleScorers = this.getHighSingleScoreNames();
-            highSingleScorers.clear();
-            highSingleScorers.add(highScorer);
-            this.setHighSingleScoreNames(highSingleScorers);
+            // Highest single score
+            if (highScore == this.getHighSingleScore()) {
+                this.getHighSingleScoreNames().add(highScorer);
+            } else if (highScore > this.getHighSingleScore()) {
+                this.setHighSingleScore(highScore);
+                ArrayList<String> highSingleScorers = this.getHighSingleScoreNames();
+                highSingleScorers.clear();
+                highSingleScorers.add(highScorer);
+                this.setHighSingleScoreNames(highSingleScorers);
+            }
         }
     }
 }
