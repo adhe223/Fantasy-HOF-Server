@@ -113,6 +113,7 @@ public class Owner {
         boolean isPlayoffs = matchup.getPlayoffs();
         double pointsFor = name.equals(matchup.getHomeOwner()) ? matchup.getHomePoints() : matchup.getAwayPoints();
         double pointsAgainst = name.equals(matchup.getHomeOwner()) ? matchup.getAwayPoints() : matchup.getHomePoints();
+        String teamName = name.equals(matchup.getHomeOwner()) ? matchup.getHomeTeamName() : matchup.getAwayTeamName();
 
         if (pointsFor > pointsAgainst) {win++;}
         else if (pointsFor == pointsAgainst && !isPlayoffs) { tie++; }
@@ -139,7 +140,7 @@ public class Owner {
         if (!isPlayoffs) {
             if (this.seasons.get(year) == null) {
                 // Add an OwnerSeason object to our map
-                this.seasons.put(year, new OwnerSeason(win, loss, tie, year, pointsFor, pointsAgainst));
+                this.seasons.put(year, new OwnerSeason(win, loss, tie, year, pointsFor, pointsAgainst, teamName));
             } else {
                 // Add to the OwnerSeason object
                 OwnerSeason ownersSeason = this.seasons.get(year);

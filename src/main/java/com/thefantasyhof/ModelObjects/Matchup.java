@@ -2,15 +2,19 @@ package com.thefantasyhof.ModelObjects;
 
 public class Matchup {
     private String awayOwner;
+    private String awayTeamName;
     private String homeOwner;
+    private String homeTeamName;
     private double awayPoints;
     private double homePoints;
     private Boolean isPlayoffs;
     private String year;
 
-    public Matchup(String awayOwner, String homeOwner, double awayPoints, double homePoints, Boolean isPlayoffs, String year) {
+    public Matchup(String awayOwner, String awayTeamName, String homeOwner, String homeTeamName, double awayPoints, double homePoints, Boolean isPlayoffs, String year) {
         this.awayOwner = awayOwner;
+        this.awayTeamName = awayTeamName;
         this.homeOwner = homeOwner;
+        this.homeTeamName = homeTeamName;
         this.awayPoints = awayPoints;
         this.homePoints = homePoints;
         this.isPlayoffs = isPlayoffs;
@@ -53,6 +57,22 @@ public class Matchup {
     }
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getAwayTeamName() {
+        return awayTeamName;
+    }
+
+    public void setAwayTeamName(String awayTeamName) {
+        this.awayTeamName = awayTeamName;
+    }
+
+    public String getHomeTeamName() {
+        return homeTeamName;
+    }
+
+    public void setHomeTeamName(String homeTeamName) {
+        this.homeTeamName = homeTeamName;
     }
     // </editor-fold>
 

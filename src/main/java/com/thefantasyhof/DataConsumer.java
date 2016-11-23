@@ -1,9 +1,6 @@
 package com.thefantasyhof;
+import com.thefantasyhof.ModelObjects.*;
 import com.thefantasyhof.Utilities;
-import com.thefantasyhof.ModelObjects.LeagueSeason;
-import com.thefantasyhof.ModelObjects.Matchup;
-import com.thefantasyhof.ModelObjects.Owner;
-import com.thefantasyhof.ModelObjects.OwnerSeason;
 import org.json.*;
 
 import java.util.ArrayList;
@@ -73,14 +70,10 @@ public class DataConsumer {
 
     // Loops over the given year in each owner's array and finds the winningest/losingest teams, and the high/low scorers
     private void calculateLeagueSeasonAggregates(String year) {
-        ArrayList<String> losingestNames = seasons.get(year).getLosingestNames();
-        int mostLosses = seasons.get(year).getLosingestLosses();
-        ArrayList<String> winningestNames = seasons.get(year).getWinningestNames();
-        int mostWins = seasons.get(year).getWinningestWins();
-        ArrayList<String> lowTotalScorerNames = seasons.get(year).getLowTotalScorerNames();
-        double lowTotalScore = seasons.get(year).getLowTotalScore();
-        ArrayList<String> highTotalScorerNames = seasons.get(year).getHighTotalScorerNames();
-        double highTotalScore = seasons.get(year).getHighTotalScore();
+        ArrayList<WLSuperlative> winningestTeams = seasons.get(year).getWinningestTeams();
+        ArrayList<WLSuperlative> losingestTeams = seasons.get(year).getLosingestTeams();
+        ArrayList<PointsSuperlative> highestTotalScoringTeams = seasons.get(year).getHighestTotalScoringTeams();
+        ArrayList<PointsSuperlative> lowestTotalScoringTeams = seasons.get(year).getLowestTotalScoringTeams();
         OwnerSeason ownersSeason;
 
         // Iterate over each owner's OwnerSeason object for the given year
@@ -97,53 +90,66 @@ public class DataConsumer {
             double totalPointsFor = ownersSeason.getPointsFor();
             int wins = ownersSeason.getWins();
             int losses = ownersSeason.getLosses();
+            String teamName = ownersSeason.getTeamName();
 
             // Set the winningest team
             // TODO: Could unduplicate these 4
-            if (wins == mostWins) {
-                winningestNames.add(ownerName);
-            } else if (wins > mostWins) {
-                mostWins = wins;
-                winningestNames.clear();
-                winningestNames.add(ownerName);
+            if (winningestTeams.size() == 0) {
+                winningestTeams.add(new WLSuperlative(ownerName, teamName, year, wins));
+            } else {
+                int mostWins = winningestTeams.get(0).getValue();
+                if (wins == mostWins) {
+                    winningestTeams.add(new WLSuperlative(ownerName, teamName, year, wins));
+                } else if (wins > mostWins) {
+                    winningestTeams.clear();
+                    winningestTeams.add(new WLSuperlative(ownerName, teamName, year, wins));
+                }
             }
 
             // Set the losingest team
-            if (losses == mostLosses) {
-                losingestNames.add(ownerName);
-            } else if (losses > mostLosses) {
-                mostLosses = losses;
-                losingestNames.clear();
-                losingestNames.add(ownerName);
+            if (losingestTeams.size() == 0) {
+                losingestTeams.add(new WLSuperlative(ownerName, teamName, year, losses));
+            } else {
+                int mostLosses = losingestTeams.get(0).getValue();
+                if (losses == mostLosses) {
+                    losingestTeams.add(new WLSuperlative(ownerName, teamName, year, losses));
+                } else if (losses > mostLosses) {
+                    losingestTeams.clear();
+                    losingestTeams.add(new WLSuperlative(ownerName, teamName, year, losses));
+                }
             }
 
             // Set the highest total score
-            if (totalPointsFor == highTotalScore) {
-                highTotalScorerNames.add(ownerName);
-            } else if (totalPointsFor > highTotalScore) {
-                highTotalScore = totalPointsFor;
-                highTotalScorerNames.clear();
-                highTotalScorerNames.add(ownerName);
+            if (highestTotalScoringTeams.size() == 0) {
+                highestTotalScoringTeams.add(new PointsSuperlative(ownerName, teamName, year, totalPointsFor));
+            } else {
+                double highTotalScore = highestTotalScoringTeams.get(0).getValue();
+                if (totalPointsFor == highTotalScore) {
+                    highestTotalScoringTeams.add(new PointsSuperlative(ownerName, teamName, year, totalPointsFor));
+                } else if (totalPointsFor > highTotalScore) {
+                    highestTotalScoringTeams.clear();
+                    highestTotalScoringTeams.add(new PointsSuperlative(ownerName, teamName, year, totalPointsFor));
+                }
             }
 
             // Set the lowest total score
-            if (totalPointsFor == lowTotalScore) {
-                lowTotalScorerNames.add(ownerName);
-            } else if (totalPointsFor < lowTotalScore) {
-                lowTotalScore = totalPointsFor;
-                lowTotalScorerNames.clear();
-                lowTotalScorerNames.add(ownerName);
+            if (lowestTotalScoringTeams.size() == 0) {
+                lowestTotalScoringTeams.add(new PointsSuperlative(ownerName, teamName, year, totalPointsFor));
+            } else {
+                double lowTotalScore = lowestTotalScoringTeams.get(0).getValue();
+                if (totalPointsFor == lowTotalScore) {
+                    lowestTotalScoringTeams.add(new PointsSuperlative(ownerName, teamName, year, totalPointsFor));
+                } else if (totalPointsFor < lowTotalScore) {
+                    lowestTotalScoringTeams.clear();
+                    lowestTotalScoringTeams.add(new PointsSuperlative(ownerName, teamName, year, totalPointsFor));
+                }
             }
 
             // Store all the values
-            seasons.get(year).setWinningestNames(winningestNames);
-            seasons.get(year).setWinningestWins(mostWins);
-            seasons.get(year).setLosingestNames(losingestNames);
-            seasons.get(year).setLosingestLosses(mostLosses);
-            seasons.get(year).setHighTotalScorerNames(highTotalScorerNames);
-            seasons.get(year).setHighTotalScore(highTotalScore);
-            seasons.get(year).setLowTotalScorerNames(lowTotalScorerNames);
-            seasons.get(year).setLowTotalScore(lowTotalScore);
+            seasons.get(year).setWinningestTeams(winningestTeams);
+            seasons.get(year).setLosingestTeams(losingestTeams);
+            seasons.get(year).setHighestTotalScoringTeams(highestTotalScoringTeams);
+            seasons.get(year).setLowestTotalScoringTeams(lowestTotalScoringTeams);
         }
     }
 
@@ -152,6 +158,8 @@ public class DataConsumer {
         String secondTeamOwnerKey = "homeTeamOwner";
         String firstPointsKey = "awayPoints";
         String secondPointsKey = "homePoints";
+        String firstTeamNameKey = "awayTeamName";
+        String secondTeamNameKey = "homeTeamName";
 
         // Playoffs have different keys in the JSON object
         if (isPlayoffs) {
@@ -159,6 +167,8 @@ public class DataConsumer {
             secondTeamOwnerKey = "secondTeamOwner";
             firstPointsKey = "firstPoints";
             secondPointsKey = "secondPoints";
+            firstTeamNameKey = "firstTeamName";
+            secondTeamNameKey = "secondTeamName";
         }
 
         // Iterate over the matchups, create a Matchup object, then add them to the owner's objects
@@ -166,8 +176,10 @@ public class DataConsumer {
             // Create matchup object
             JSONObject matchupJSON = matchups.getJSONObject(i);
             String awayOwner = matchupJSON.getString(firstTeamOwnerKey);
+            String awayTeamName = matchupJSON.getString(firstTeamNameKey);
             String homeOwner = matchupJSON.getString(secondTeamOwnerKey);
-            Matchup matchup = new Matchup(awayOwner, homeOwner, matchupJSON.getDouble(firstPointsKey), matchupJSON.getDouble(secondPointsKey), isPlayoffs, year);
+            String homeTeamName = matchupJSON.getString(secondTeamNameKey);
+            Matchup matchup = new Matchup(awayOwner, awayTeamName, homeOwner, homeTeamName, matchupJSON.getDouble(firstPointsKey), matchupJSON.getDouble(secondPointsKey), isPlayoffs, year);
 
             // Add matchup data to the owner's object
             owners.get(awayOwner).addMatchupData(matchup);
@@ -185,24 +197,6 @@ public class DataConsumer {
         while (ownersKeys.hasNext()) {
             String name = (String)ownersKeys.next();
             Owner owner = new Owner(name);
-
-            /*
-            // Iterate over the seasons the owner has and tabulate the data
-            JSONObject seasonsDict = ownersInfo.getJSONObject(name).getJSONObject("seasonsDict");
-            Iterator<String> seasonsKeys = seasonsDict.keys();
-            while (seasonsKeys.hasNext()) {
-                String year = (String)seasonsKeys.next();
-                JSONObject season = seasonsDict.getJSONObject(year);
-
-                int wins = season.getInt("wins");
-                int losses = season.getInt("losses");
-                // TODO: Do ties work right on the node.js parser?
-                // int ties = season.getInt("ties");
-                double pointsFor = season.getDouble("pointsFor");
-                double pointsAgainst = season.getDouble("pointsAgainst");
-                owner.addSeasonData(wins, losses, pointsFor, pointsAgainst);
-            }
-            */
 
             owners.put(name, owner);
         }

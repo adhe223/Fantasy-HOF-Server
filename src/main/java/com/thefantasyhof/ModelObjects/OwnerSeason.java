@@ -10,14 +10,16 @@ public class OwnerSeason {
     private String year;
     private double pointsFor = 0;
     private double pointsAgainst = 0;
+    private String teamName;
 
-    public OwnerSeason(int wins, int losses, int ties, String year, double pointsFor, double pointsAgainst) {
+    public OwnerSeason(int wins, int losses, int ties, String year, double pointsFor, double pointsAgainst, String teamName) {
         this.wins = wins;
         this.losses = losses;
         this.ties = ties;
         this.year = year;
         this.pointsFor = pointsFor;
         this.pointsAgainst = pointsAgainst;
+        this.teamName = teamName;
     }
 
     // <editor-fold desc="Getters/Setters">
@@ -56,6 +58,14 @@ public class OwnerSeason {
     }
     public void setPointsAgainst(double pointsAgainst) {
         this.pointsAgainst = pointsAgainst;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
     //</editor-fold>
 }
