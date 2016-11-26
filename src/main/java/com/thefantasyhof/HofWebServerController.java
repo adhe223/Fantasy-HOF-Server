@@ -30,7 +30,7 @@ public class HofWebServerController {
             String responseString = writer.toString();
 
             DataConsumer dc = new DataConsumer(responseString);
-            dc.tabulateMatchupData();
+            dc.tabulateData();
 
             return responseString;
         } catch (Exception e){ return "HTTP GET Failed!"; }

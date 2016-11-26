@@ -92,7 +92,7 @@ public class Owner {
     public void setSeasons(Map<String, OwnerSeason> seasons) {
         this.seasons = seasons;
     }
-// </editor-fold>
+// </editor-fold>drtgn
 
     public Owner(String ownerName) {
         this.name = ownerName;
