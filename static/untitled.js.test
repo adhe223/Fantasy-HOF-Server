@@ -1,0 +1,28 @@
+var dataJSON = {
+  chartName: "PapaChart",
+  data: {blabla: "bla"}
+};
+
+class BarChart extends React.Component {
+  render() {
+    const chartName = this.props.chartName;
+    const chartData = this.props.data;
+
+    return (
+      <canvas id="{chartName}" width="400" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("{chartName}");
+        var myBarChart = new Chart(ctx, {
+          type: 'bar',
+          data: {this.props.data},
+          options: options
+        });
+      </script>
+    );   
+  }
+}
+
+ReactDOM.render(
+  <BarChart  chartName={dataJSON.chartName} data={dataJSON.data} />,
+  document.getElementById('container')
+);

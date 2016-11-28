@@ -13,7 +13,7 @@ import java.net.URLConnection;
 public class HofWebServerController {
     @RequestMapping("/")
     public String index() {
-        return "Greetings from Spring Boot!";
+        return "/html/index.html";
     }
 
     @RequestMapping("/getJSON")
@@ -32,7 +32,7 @@ public class HofWebServerController {
             DataConsumer dc = new DataConsumer(responseString);
             dc.tabulateData();
 
-            return responseString;
+            return "";
         } catch (Exception e){ return "HTTP GET Failed!"; }
     }
 }
