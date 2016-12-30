@@ -1,5 +1,6 @@
 .gradle
 /node_modules/
+bundle.js
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
