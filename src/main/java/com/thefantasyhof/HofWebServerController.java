@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HofWebServerController {
-    @RequestMapping("/home")
+    @RequestMapping("/hof")
     public String home() {
-        return "home";
+        return "hof";
     }
 }
