@@ -10,7 +10,7 @@ import java.net.URLConnection;
 public final class Utilities {
     private Utilities() {}
 
-    public String getJSON() {
+    public static DataConsumer getLeagueData() {
         String url = "https://agile-badlands-78491.herokuapp.com/getLeagueDataJSON?leagueId=44169";
         String charset = "UTF-8";
 
@@ -25,7 +25,7 @@ public final class Utilities {
             DataConsumer dc = new DataConsumer(responseString);
             dc.tabulateData();
 
-            return "";
-        } catch (Exception e){ return "HTTP GET Failed!"; }
+            return dc;
+        } catch (Exception e){ return null; }
     }
 }
