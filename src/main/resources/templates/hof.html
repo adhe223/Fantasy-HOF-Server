@@ -5,8 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <p th:text="${leagueData.owners.get('Alex Henry').name}"></p>
     <div id="root"></div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var leagueData = [[${leagueData}]];
+        /*]]>*/
+    </script>
     <script src="bundle.js"></script>
 </body>
 </html>
