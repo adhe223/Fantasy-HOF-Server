@@ -83,4 +83,82 @@ export default class DataRetrieval {
 
         return new ChartData(labels, winP, 'Win %');
     }
+    mostWinsInSeason() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    mostWinsInSeason: this.leagueDataRepo.owners[key].mostWinsInSeason[0].value
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.mostWinsInSeason - a.mostWinsInSeason;
+        });
+
+        var labels = [];
+        var mostWinsInSeason = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            mostWinsInSeason.push(objectsArr[i].mostWinsInSeason);
+        }
+
+        return new ChartData(labels, mostWinsInSeason, 'Most Wins In Season');
+    }
+    mostLossesInSeason() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    mostLossesInSeason: this.leagueDataRepo.owners[key].mostLossesInSeason[0].value
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.mostLossesInSeason - a.mostLossesInSeason;
+        });
+
+        var labels = [];
+        var mostLossesInSeason = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            mostLossesInSeason.push(objectsArr[i].mostLossesInSeason);
+        }
+
+        return new ChartData(labels, mostLossesInSeason, 'Most Losses In Season');
+    }
+    averageWinsInSeason() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    averageWinsInSeason: Math.round((this.leagueDataRepo.owners[key].wins / Object.keys(this.leagueDataRepo.owners[key].seasons).length) * 100) / 100
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.averageWinsInSeason - a.averageWinsInSeason;
+        });
+
+        var labels = [];
+        var averageWinsInSeason = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            averageWinsInSeason.push(objectsArr[i].averageWinsInSeason);
+        }
+
+        return new ChartData(labels, averageWinsInSeason, 'Average Wins In Season');
+    }
 }
