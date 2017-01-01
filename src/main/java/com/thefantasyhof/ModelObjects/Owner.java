@@ -194,29 +194,33 @@ public class Owner {
         }
 
         // Add to single game superlatives
-        // Set the highest score in a game
-        if (this.mostPointsForInGame.size() == 0) {
-            this.mostPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
-        } else {
-            double highScore = this.mostPointsForInGame.get(0).getValue();
-            if (pointsFor == highScore) {
+        // Set the highest score in a game (just regular season)
+        if (!isPlayoffs) {
+            if (this.mostPointsForInGame.size() == 0) {
                 this.mostPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
-            } else if (pointsFor > highScore) {
-                this.mostPointsForInGame.clear();
-                this.mostPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+            } else {
+                double highScore = this.mostPointsForInGame.get(0).getValue();
+                if (pointsFor == highScore) {
+                    this.mostPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+                } else if (pointsFor > highScore) {
+                    this.mostPointsForInGame.clear();
+                    this.mostPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+                }
             }
         }
 
         // Set the lowest score in a game
-        if (this.leastPointsForInGame.size() == 0) {
-            this.leastPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
-        } else {
-            double lowScore = this.leastPointsForInGame.get(0).getValue();
-            if (pointsFor == lowScore) {
+        if (!isPlayoffs) {
+            if (this.leastPointsForInGame.size() == 0) {
                 this.leastPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
-            } else if (pointsFor < lowScore) {
-                this.leastPointsForInGame.clear();
-                this.leastPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+            } else {
+                double lowScore = this.leastPointsForInGame.get(0).getValue();
+                if (pointsFor == lowScore) {
+                    this.leastPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+                } else if (pointsFor < lowScore) {
+                    this.leastPointsForInGame.clear();
+                    this.leastPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+                }
             }
         }
     }

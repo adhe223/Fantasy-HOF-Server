@@ -161,4 +161,239 @@ export default class DataRetrieval {
 
         return new ChartData(labels, averageWinsInSeason, 'Average Wins In Season');
     }
+    totalPointsFor() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    pointsFor: Math.round(this.leagueDataRepo.owners[key].pointsFor * 100) / 100
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.pointsFor - a.pointsFor;
+        });
+
+        var labels = [];
+        var pointsFor = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            pointsFor.push(objectsArr[i].pointsFor);
+        }
+
+        return new ChartData(labels, pointsFor, 'Total # of Points For');
+    }
+    totalPointsAgainst() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    pointsAgainst: Math.round(this.leagueDataRepo.owners[key].pointsAgainst * 100) / 100
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.pointsAgainst - a.pointsAgainst;
+        });
+
+        var labels = [];
+        var pointsAgainst = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            pointsAgainst.push(objectsArr[i].pointsAgainst);
+        }
+
+        return new ChartData(labels, pointsAgainst, 'Total # of Points Against');
+    }
+    averagePointsFor() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    averagePointsFor: Math.round((this.leagueDataRepo.owners[key].pointsFor / Object.keys(this.leagueDataRepo.owners[key].seasons).length) * 100) / 100
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.averagePointsFor - a.averagePointsFor;
+        });
+
+        var labels = [];
+        var averagePointsFor = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            averagePointsFor.push(objectsArr[i].averagePointsFor);
+        }
+
+        return new ChartData(labels, averagePointsFor, 'Average # of Points For');
+    }
+    averagePointsAgainst() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    averagepointsAgainst: Math.round((this.leagueDataRepo.owners[key].pointsAgainst / Object.keys(this.leagueDataRepo.owners[key].seasons).length) * 100) / 100
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.averagepointsAgainst - a.averagepointsAgainst;
+        });
+
+        var labels = [];
+        var averagepointsAgainst = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            averagepointsAgainst.push(objectsArr[i].averagepointsAgainst);
+        }
+
+        return new ChartData(labels, averagepointsAgainst, 'Average # of Points Against');
+    }
+    ownerHighestGameScore() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    ownerHighestGameScore: this.leagueDataRepo.owners[key].mostPointsForInGame[0].value
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.ownerHighestGameScore - a.ownerHighestGameScore;
+        });
+
+        var labels = [];
+        var ownerHighestGameScore = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            ownerHighestGameScore.push(objectsArr[i].ownerHighestGameScore);
+        }
+
+        return new ChartData(labels, ownerHighestGameScore, 'Highest Game Score Per Owner');
+    }
+    ownerLowestGameScore() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    ownerLowestGameScore: this.leagueDataRepo.owners[key].leastPointsForInGame[0].value
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return a.ownerLowestGameScore - b.ownerLowestGameScore;
+        });
+
+        var labels = [];
+        var ownerLowestGameScore = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            ownerLowestGameScore.push(objectsArr[i].ownerLowestGameScore);
+        }
+
+        return new ChartData(labels, ownerLowestGameScore, 'Lowest Game Score Per Owner');
+    }
+    ownerMostSeasonPointsFor() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    ownerMostSeasonPointsFor: Math.round(this.leagueDataRepo.owners[key].mostPointsForInSeason[0].value * 100) / 100
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.ownerMostSeasonPointsFor - a.ownerMostSeasonPointsFor;
+        });
+
+        var labels = [];
+        var ownerMostSeasonPointsFor = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            ownerMostSeasonPointsFor.push(objectsArr[i].ownerMostSeasonPointsFor);
+        }
+
+        return new ChartData(labels, ownerMostSeasonPointsFor, 'Most Points For In a Season By Owner');
+    }
+    ownerMinSeasonPointsFor() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    ownerLeastSeasonPointsFor: Math.round(this.leagueDataRepo.owners[key].leastPointsForInSeason[0].value * 100) / 100
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return a.ownerLeastSeasonPointsFor - b.ownerLeastSeasonPointsFor;
+        });
+
+        var labels = [];
+        var ownerLeastSeasonPointsFor = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            ownerLeastSeasonPointsFor.push(objectsArr[i].ownerLeastSeasonPointsFor);
+        }
+
+        return new ChartData(labels, ownerLeastSeasonPointsFor, 'Least Points For In a Season By Owner');
+    }
+    ownerAverageGameScore() {
+        // Iterate over this.leagueDataRepo and put together the labels and data
+        var objectsArr = [];
+        for (var key in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(key)) {
+                let totalGamesPlayed = this.leagueDataRepo.owners[key].wins + this.leagueDataRepo.owners[key].losses + this.leagueDataRepo.owners[key].ties;
+                objectsArr.push({
+                    owner: key,
+                    ownerAverageGameScore: Math.round((this.leagueDataRepo.owners[key].pointsFor / totalGamesPlayed) * 100) / 100
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.ownerAverageGameScore - a.ownerAverageGameScore;
+        });
+
+        var labels = [];
+        var ownerAverageGameScore = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            ownerAverageGameScore.push(objectsArr[i].ownerAverageGameScore);
+        }
+
+        return new ChartData(labels, ownerAverageGameScore, 'Average Game Score');
+    }
 }
