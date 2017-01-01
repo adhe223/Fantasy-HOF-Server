@@ -1,5 +1,6 @@
 package com.thefantasyhof.ModelObjects;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,12 @@ public class Owner {
     private double playoffPA = 0;
     private Map<String, OwnerMatchupSeries> matchupSeries = new HashMap<String, OwnerMatchupSeries>();
     private Map<String, OwnerSeason> seasons = new HashMap<>();
+    private ArrayList<WLSuperlative> mostWinsInSeason = new ArrayList<>();
+    private ArrayList<WLSuperlative> mostLossesInSeason = new ArrayList<>();
+    private ArrayList<PointsSuperlative> mostPointsForInSeason = new ArrayList<>();
+    private ArrayList<PointsSuperlative> leastPointsForInSeason = new ArrayList<>();
+    private ArrayList<PointsSuperlative> mostPointsForInGame = new ArrayList<>();
+    private ArrayList<PointsSuperlative> leastPointsForInGame = new ArrayList<>();
     // </editor-fold>
 
     // <editor-fold desc="Getters/Setters">
@@ -92,7 +99,25 @@ public class Owner {
     public void setSeasons(Map<String, OwnerSeason> seasons) {
         this.seasons = seasons;
     }
-// </editor-fold>drtgn
+    public ArrayList<WLSuperlative> getMostWinsInSeason() {
+        return mostWinsInSeason;
+    }
+    public ArrayList<WLSuperlative> getMostLossesInSeason() {
+        return mostLossesInSeason;
+    }
+    public ArrayList<PointsSuperlative> getMostPointsForInSeason() {
+        return mostPointsForInSeason;
+    }
+    public ArrayList<PointsSuperlative> getLeastPointsForInSeason() {
+        return leastPointsForInSeason;
+    }
+    public ArrayList<PointsSuperlative> getMostPointsForInGame() {
+        return mostPointsForInGame;
+    }
+    public ArrayList<PointsSuperlative> getLeastPointsForInGame() {
+        return leastPointsForInGame;
+    }
+// </editor-fold>
 
     public Owner(String ownerName) {
         this.name = ownerName;
@@ -166,6 +191,96 @@ public class Owner {
             opponentMatchup.setTies(opponentMatchup.getTies() + tie);
             opponentMatchup.setPointsFor(opponentMatchup.getPointsFor() + pointsFor);
             opponentMatchup.setOpponentPoints(opponentMatchup.getOpponentPoints() + pointsAgainst);
+        }
+
+        // Add to single game superlatives
+        // Set the highest score in a game
+        if (this.mostPointsForInGame.size() == 0) {
+            this.mostPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+        } else {
+            double highScore = this.mostPointsForInGame.get(0).getValue();
+            if (pointsFor == highScore) {
+                this.mostPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+            } else if (pointsFor > highScore) {
+                this.mostPointsForInGame.clear();
+                this.mostPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+            }
+        }
+
+        // Set the lowest score in a game
+        if (this.leastPointsForInGame.size() == 0) {
+            this.leastPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+        } else {
+            double lowScore = this.leastPointsForInGame.get(0).getValue();
+            if (pointsFor == lowScore) {
+                this.leastPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+            } else if (pointsFor < lowScore) {
+                this.leastPointsForInGame.clear();
+                this.leastPointsForInGame.add(new PointsSuperlative(this.name, teamName, year, pointsFor));
+            }
+        }
+    }
+    // Calculate the most wins, losses, points for, and p[oints against that an owner has had in a season. This DOES NOT
+    // calculate the most points an owner has ever scored in a single matchup. That is done in this.addMatchupData
+    public void calculateOwnerSuperlatives() {
+        Map<String, OwnerSeason> seasons = this.getSeasons();
+
+        // Iterate over each season
+        for (Map.Entry<String, OwnerSeason> entry : this.getSeasons().entrySet()) {
+            String year = entry.getKey();
+            OwnerSeason season = entry.getValue();
+
+            // Set the most wins in a season
+            if (this.mostWinsInSeason.size() == 0) {
+                this.mostWinsInSeason.add(new WLSuperlative(this.name, season.getTeamName(), year, season.getWins()));
+            } else {
+                int mostWins = this.mostWinsInSeason.get(0).getValue();
+                if (season.getWins() == mostWins) {
+                    this.mostWinsInSeason.add(new WLSuperlative(this.name, season.getTeamName(), year, season.getWins()));
+                } else if (season.getWins() > mostWins) {
+                    this.mostWinsInSeason.clear();
+                    this.mostWinsInSeason.add(new WLSuperlative(this.name, season.getTeamName(), year, season.getWins()));
+                }
+            }
+
+            // Set the most losses in a season
+            if (this.mostLossesInSeason.size() == 0) {
+                this.mostLossesInSeason.add(new WLSuperlative(this.name, season.getTeamName(), year, season.getLosses()));
+            } else {
+                int mostLosses = this.mostLossesInSeason.get(0).getValue();
+                if (season.getLosses() == mostLosses) {
+                    this.mostLossesInSeason.add(new WLSuperlative(this.name, season.getTeamName(), year, season.getLosses()));
+                } else if (season.getLosses() > mostLosses) {
+                    this.mostLossesInSeason.clear();
+                    this.mostLossesInSeason.add(new WLSuperlative(this.name, season.getTeamName(), year, season.getLosses()));
+                }
+            }
+
+            // Set the highest total score in a season
+            if (this.mostPointsForInSeason.size() == 0) {
+                this.mostPointsForInSeason.add(new PointsSuperlative(this.name, season.getTeamName(), year, season.getPointsFor()));
+            } else {
+                double highTotalScore = this.mostPointsForInSeason.get(0).getValue();
+                if (season.getPointsFor() == highTotalScore) {
+                    this.mostPointsForInSeason.add(new PointsSuperlative(this.name, season.getTeamName(), year, season.getPointsFor()));
+                } else if (season.getPointsFor() > highTotalScore) {
+                    this.mostPointsForInSeason.clear();
+                    this.mostPointsForInSeason.add(new PointsSuperlative(this.name, season.getTeamName(), year, season.getPointsFor()));
+                }
+            }
+
+            // Set the lowest total score in a season
+            if (this.leastPointsForInSeason.size() == 0) {
+                this.leastPointsForInSeason.add(new PointsSuperlative(this.name, season.getTeamName(), year, season.getPointsFor()));
+            } else {
+                double lowTotalScore = this.leastPointsForInSeason.get(0).getValue();
+                if (season.getPointsFor() == lowTotalScore) {
+                    this.leastPointsForInSeason.add(new PointsSuperlative(this.name, season.getTeamName(), year, season.getPointsFor()));
+                } else if (season.getPointsFor() < lowTotalScore) {
+                    this.leastPointsForInSeason.clear();
+                    this.leastPointsForInSeason.add(new PointsSuperlative(this.name, season.getTeamName(), year, season.getPointsFor()));
+                }
+            }
         }
     }
 }

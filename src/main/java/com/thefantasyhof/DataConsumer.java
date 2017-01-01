@@ -73,6 +73,9 @@ public class DataConsumer {
             this.calculateLeagueSeasonAggregates(year);
         }
 
+        // Calculate the all time superlatives for each owner by looping over their seasons
+        this.ownerSuperlativeTabulation();
+
         // Calculate the all time superlatives by looping over the leagueSeasons objects
         this.matchupSuperlativeTabulation();
     }
@@ -197,6 +200,17 @@ public class DataConsumer {
 
             // Add matchup data to the LeagueSeasons map
             seasons.get(year).matchupConsumer(matchup);
+        }
+    }
+    // Iterate over the owners and call the method to calculate their superlatives
+    private void ownerSuperlativeTabulation() {
+        // Iterate over thw owners map
+        for (Map.Entry<String, Owner> entry : this.getOwners().entrySet()) {
+            String ownerName = entry.getKey();
+            Owner owner = entry.getValue();
+
+            // Call the method to have each tabulate their superlatives
+            owner.calculateOwnerSuperlatives();
         }
     }
 

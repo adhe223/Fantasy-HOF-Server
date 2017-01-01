@@ -9,8 +9,8 @@ public class HofWebServerController {
     @RequestMapping("/hof")
     public String hof(Model model) {
         //Retrieve the JSON data
-        //DataConsumer leagueData = Utilities.getLeagueData();
-        DataConsumer leagueData = null;
+        DataConsumer leagueData = Utilities.getLeagueData();
+        //DataConsumer leagueData = null;
         model.addAttribute("leagueData", leagueData);
 
         return "hof";
