@@ -1,21 +1,42 @@
 import React from 'react';
 import Chart from 'chart.js';
 
-class BarChart extends React.Component {
+class LossChart extends React.Component {
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
         const chartName = this.props.chartName;
-        const chartLabels = this.props.chartLabels;
-        const chartDataSet = this.props.chartDataset;
-        const chartDatasetLabel = this.props.chartDatasetLabel;
+
+        // Iterate over leagueData and put together the labels and data
+        var objectsArr = [];
+        for (var key in leagueData.owners) {
+            if (leagueData.owners.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    losses: leagueData.owners[key].losses
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.losses - a.losses;
+        });
+
+        var labels = [];
+        var losses = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            losses.push(objectsArr[i].losses);
+        }
+
         const chartData = {
-            labels: chartLabels,
+            labels: labels,
             datasets: [{
-                label: chartDatasetLabel,
-                data: chartDataSet,
+                label: '# of Losses',
+                data: losses,
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255,99,132,1)',
                 borderWidth: 1
@@ -46,4 +67,4 @@ class BarChart extends React.Component {
     }
 }
 
-export default BarChart;
+export default LossChart;

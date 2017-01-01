@@ -8,7 +8,14 @@
     <div id="root"></div>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var leagueData = [[${leagueData}]];
+        const localStorageId ="fantasyHOFLeagueData";
+        var leagueData;
+        if (localStorage.getItem(localStorageId)) {
+            leagueData = JSON.parse(localStorage.getItem(localStorageId));
+        } else {
+            leagueData = [[${leagueData}]];
+            localStorage.setItem(localStorageId, JSON.stringify(leagueData));
+        }
         /*]]>*/
     </script>
     <script src="bundle.js"></script>
