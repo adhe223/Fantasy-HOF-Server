@@ -15,10 +15,11 @@ class Table extends React.Component {
         var headingsRow = [];
         for (var i = 0; i < headings.length; i++) {
             headingsRow.push(
-                <th>{ headings[i] }</th>
+                <th key={ i }>{ headings[i] }</th>
             );
+            i++;
         }
-        headingsRow = <tr key={ i }> { headingsRow } </tr>;
+        headingsRow = <tr key={ i }>{ headingsRow }</tr>;
         tableData.push(headingsRow);
         i++;
 
@@ -27,15 +28,16 @@ class Table extends React.Component {
             var tableRow = [];
             for (var col = 0; col < data[row].length; col++) {
                 tableRow.push(
-                    <td>{ data[row][col] }</td>
+                    <td key={ i }>{ data[row][col] }</td>
                 );
+                i++;
             }
 
-            tableRow = <tr key={ i }> {tableRow} </tr>;
+            tableRow = <tr key={ i }>{ tableRow }</tr>;
             tableData.push(tableRow);
             i++;
         }
-        tableData = <tbody> { tableData } </tbody>;
+        tableData = <tbody>{ tableData }</tbody>;
 
         return(
             <table>
