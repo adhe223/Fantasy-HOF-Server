@@ -33,18 +33,47 @@ class MatchupPage extends React.Component {
         const matchupData = this.props.owners[this.state.owner].matchupSeries;
 
         // Create the headings
-        this.headings = ['Opponent', 'Wins', 'Losses', 'Ties', 'Points For', 'Points Against'];
+        this.headings = [
+            'Opponent',
+            'Wins',
+            'Losses',
+            'Ties',
+            'Win Percentage',
+            'Points For',
+            'Average Points For',
+            'Points Against',
+            'Average Points Against'
+        ];
 
         // Create the table data
         for (var key in matchupData) {
             if (matchupData.hasOwnProperty(key)) {
                 var dataArr = [];
+
+                // Retrieve data to use
+                const wins = matchupData[key].wins;
+                const losses = matchupData[key].losses;
+                const ties = matchupData[key].ties;
+                const totalGames = wins + losses + ties;
+
+                // Round floating point data
+                const pointsFor = Math.round(matchupData[key].pointsFor * 100) / 100;
+                const opponentPoints = Math.round(matchupData[key].opponentPoints * 100) / 100;
+
+                // Calculate stats
+                const winP = Math.round((wins / totalGames) * 1000) / 10;
+                const PFPer = Math.round(pointsFor / totalGames * 100) / 100;
+                const PAPer = Math.round(opponentPoints / totalGames * 100) / 100;
+
                 dataArr.push(matchupData[key].opponent.trim());
-                dataArr.push(matchupData[key].wins);
-                dataArr.push(matchupData[key].losses);
-                dataArr.push(matchupData[key].ties);
-                dataArr.push(matchupData[key].pointsFor);
-                dataArr.push(matchupData[key].opponentPoints);
+                dataArr.push(wins);
+                dataArr.push(losses);
+                dataArr.push(ties);
+                dataArr.push(winP);
+                dataArr.push(pointsFor);
+                dataArr.push(PFPer);
+                dataArr.push(opponentPoints);
+                dataArr.push(PAPer);
 
                 this.data.push(dataArr);
             }
