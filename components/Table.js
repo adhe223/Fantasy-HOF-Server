@@ -9,33 +9,33 @@ class Table extends React.Component {
         const headings = this.props.headings;
         const data = this.props.data;
         var tableData = [];
-        var i = 1;
+        var elemIndex = 1;
 
         // Table Headings
         var headingsRow = [];
         for (var i = 0; i < headings.length; i++) {
             headingsRow.push(
-                <th key={ i }>{ headings[i] }</th>
+                <th key={ elemIndex }>{ headings[i] }</th>
             );
-            i++;
+            elemIndex++;
         }
-        headingsRow = <tr key={ i }>{ headingsRow }</tr>;
+        headingsRow = <tr key={ elemIndex }>{ headingsRow }</tr>;
         tableData.push(headingsRow);
-        i++;
+        elemIndex++;
 
         // Table data. Each array in data is a row
         for (var row = 0; row < data.length; row++) {
             var tableRow = [];
             for (var col = 0; col < data[row].length; col++) {
                 tableRow.push(
-                    <td key={ i }>{ data[row][col] }</td>
+                    <td key={ elemIndex }>{ data[row][col] }</td>
                 );
-                i++;
+                elemIndex++;
             }
 
-            tableRow = <tr key={ i }>{ tableRow }</tr>;
+            tableRow = <tr key={ elemIndex }>{ tableRow }</tr>;
             tableData.push(tableRow);
-            i++;
+            elemIndex++;
         }
         tableData = <tbody>{ tableData }</tbody>;
 
