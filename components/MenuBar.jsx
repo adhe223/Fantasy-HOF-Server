@@ -1,4 +1,6 @@
 import React from 'react';
+import Pages from '../src/js/Pages';
+import Helpers from '../src/js/Helpers';
 import css from './styles/menubar.css';
 
 class MenuBar extends React.Component {
@@ -9,7 +11,7 @@ class MenuBar extends React.Component {
     }
 
     handleChange(event) {
-        this.props.updateMethod(event.target.textContent);
+        this.props.updateMethod(Helpers.getKeyByValue(Pages.types, event.target.textContent));
     }
 
     render() {
@@ -18,16 +20,20 @@ class MenuBar extends React.Component {
         let elemIndex = 1;
 
         // Generate the menubar options
-        for (var i = 0; i < pages.length; i++) {
-            let activeClass = "";
-            if (this.props.value === pages[i]) {
-                activeClass = "active";
-            }
+        for (var page in Pages.types) {
+            if (Pages.types.hasOwnProperty(page)) {
+                let activeClass = "";
+                if (this.props.value === page) {
+                    activeClass = "active";
+                }
 
-            elemList.push(
-                <li key={ elemIndex } className={ "menuBarButton " + activeClass } onClick={ this.handleChange }>{ pages[i] }</li>
-            );
-            elemIndex++;
+                elemList.push(
+                    <li key={ elemIndex } className={ "menuBarButton " + activeClass }
+                        onClick={ this.handleChange }
+                    >{Pages.types[page]}</li>
+                );
+                elemIndex++;
+            }
         }
         elemList = <ul className="menuBar">{ elemList }</ul>;
 
