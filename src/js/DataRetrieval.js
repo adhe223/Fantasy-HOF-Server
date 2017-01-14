@@ -396,4 +396,37 @@ export default class DataRetrieval {
 
         return new ChartData(labels, ownerAverageGameScore, 'Average Game Score');
     }
+
+    generateAndStoreData(data) {
+        const winsChart = this.winsChart();
+        data.winsChart = winsChart;
+        const lossesChart = this.lossesChart();
+        data.lossesChart = lossesChart;
+        const winPChart = this.winPChart();
+        data.winPChart = winPChart;
+        const mostWinsInSeason = this.mostWinsInSeason();
+        data.mostWinsInSeason = mostWinsInSeason;
+        const mostLossesInSeason = this.mostLossesInSeason();
+        data.mostLossesInSeason = mostLossesInSeason;
+        const averageWinsInSeason = this.averageWinsInSeason();
+        data.averageWinsInSeason = averageWinsInSeason;
+        const totalPointFor = this.totalPointsFor();
+        data.totalPointFor = totalPointFor;
+        const totalPointsAgainst = this.totalPointsAgainst();
+        data.totalPointsAgainst = totalPointsAgainst;
+        const averagePointsFor = this.averagePointsFor();
+        data.averagePointsFor = averagePointsFor;
+        const averagePointsAgainst = this.averagePointsAgainst();
+        data.averagePointsAgainst = averagePointsAgainst;
+        const ownerHighestGameScore = this.ownerHighestGameScore();
+        data.ownerHighestGameScore = ownerHighestGameScore;
+        const ownerLowestGameScore = this.ownerLowestGameScore();
+        data.ownerLowestGameScore = ownerLowestGameScore;
+        const ownerAverageGameScore = this.ownerAverageGameScore();
+        data.ownerAverageGameScore = ownerAverageGameScore;
+        const ownerMostSeasonPointsFor = this.ownerMostSeasonPointsFor();
+        data.ownerMostSeasonPointsFor = ownerMostSeasonPointsFor;
+        const ownerMinSeasonPointsFor = this.ownerMinSeasonPointsFor();
+        data.ownerMinSeasonPointsFor = ownerMinSeasonPointsFor;
+    }
 }

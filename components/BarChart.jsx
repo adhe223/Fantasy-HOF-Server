@@ -4,14 +4,14 @@ import Chart from 'chart.js';
 class BarChart extends React.Component {
     constructor(props) {
         super(props);
-    }
 
-    componentDidMount() {
-        const chartName = this.props.chartName;
+        this.chartData = null;
+        this.options = null;
+
         const chartLabels = this.props.chartLabels;
         const chartDataSet = this.props.chartDataset;
         const chartDatasetLabel = this.props.chartDatasetLabel;
-        const chartData = {
+        this.chartData = {
             labels: chartLabels,
             datasets: [{
                 label: chartDatasetLabel,
@@ -21,7 +21,7 @@ class BarChart extends React.Component {
                 borderWidth: 1
             }]
         };
-        const options ={
+        this.options ={
             scales: {
                 yAxes: [{
                     ticks: {
@@ -30,18 +30,24 @@ class BarChart extends React.Component {
                 }]
             }
         };
+    }
 
-        var ctx = document.getElementById(chartName);
-        var myBarChart = new Chart(ctx, {
+    componentDidMount() {
+        var ctx = document.getElementById(this.props.chartName);
+        this.myBarChart = new Chart(ctx, {
             type: 'bar',
-            data: chartData,
-            options: options
+            data: this.chartData,
+            options: this.options
         });
+    }
+
+    componentWillUnmount() {
+        this.myBarChart.destroy();
     }
 
     render() {
         return (
-            <canvas id={this.props.chartName} width="400" height="400"></canvas>
+            <canvas id={this.props.chartName} width="400" height="400"/>
         );
     }
 }
