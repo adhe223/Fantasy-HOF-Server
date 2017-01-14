@@ -22,6 +22,11 @@ class MenuBar extends React.Component {
         // Generate the menubar options
         for (var page in Pages.types) {
             if (Pages.types.hasOwnProperty(page)) {
+                if (Pages.types[page] === Pages.types.Home) {
+                    // We don't want the 'Home' text in the menu bartyj
+                    continue;
+                }
+
                 let activeClass = "";
                 if (this.props.value === page) {
                     activeClass = "active";

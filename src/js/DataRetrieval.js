@@ -396,37 +396,132 @@ export default class DataRetrieval {
 
         return new ChartData(labels, ownerAverageGameScore, 'Average Game Score');
     }
+    championships() {
+        var objectsArr = [];
+        var championshipsData = {};
+        for (var season in this.leagueDataRepo.seasons) {
+            if (this.leagueDataRepo.seasons.hasOwnProperty(season)) {
+                const champion = this.leagueDataRepo.seasons[season].championName;
+
+                if (championshipsData[champion]) {
+                    // Previous champion
+                    championshipsData[champion] = championshipsData[champion] + 1;
+                } else {
+                    // First win
+                    championshipsData[champion] = 1;
+                }
+            }
+        }
+
+        // Populate objectArr that we'll use to sort the results
+        for (var champion in championshipsData) {
+            if (championshipsData.hasOwnProperty(champion)) {
+                objectsArr.push({
+                    owner: champion,
+                    championships: championshipsData[champion]
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.championships - a.championships;
+        });
+
+        let labels = [];
+        let championships = [];
+        for (var i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            championships.push(objectsArr[i].championships);
+        }
+
+        return new ChartData(labels, championships, 'Championships');
+    }
+    runnerUps() {
+        let objectsArr = [];
+        let runnerUpsData = {};
+        for (let season in this.leagueDataRepo.seasons) {
+            if (this.leagueDataRepo.seasons.hasOwnProperty(season)) {
+                const runnerUp = this.leagueDataRepo.seasons[season].runnerUpName;
+
+                if (runnerUpsData[runnerUp]) {
+                    // Previous champion
+                    runnerUpsData[runnerUp] = runnerUpsData[runnerUp] + 1;
+                } else {
+                    // First win
+                    runnerUpsData[runnerUp] = 1;
+                }
+            }
+        }
+
+        // Populate objectArr that we'll use to sort the results
+        for (let key in runnerUpsData) {
+            if (runnerUpsData.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    runnerUps: runnerUpsData[key]
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.runnerUps - a.runnerUps;
+        });
+
+        let labels = [];
+        let runnerUps = [];
+        for (let i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            runnerUps.push(objectsArr[i].runnerUps);
+        }
+
+        return new ChartData(labels, runnerUps, 'Runner Ups');
+    }
+    totalLeaguePoints() {
+        let totalPoints = 0;
+
+        for (let season in this.leagueDataRepo.seasons) {
+            if (this.leagueDataRepo.seasons.hasOwnProperty(season)) {
+                const points = this.leagueDataRepo.seasons[season].totalPoints;
+                totalPoints += points;
+            }
+        }
+
+        return totalPoints;
+    }
+    leaguePointsByYear() {
+        let labels = [];
+        let points = [];
+        for (let season in this.leagueDataRepo.seasons) {
+            if (this.leagueDataRepo.seasons.hasOwnProperty(season)) {
+                labels.push(season);
+                points.push(this.leagueDataRepo.seasons[season].totalPoints);
+            }
+        }
+
+        return new ChartData(labels, points, 'Total League Points by Season');
+    }
 
     generateAndStoreData(data) {
-        const winsChart = this.winsChart();
-        data.winsChart = winsChart;
-        const lossesChart = this.lossesChart();
-        data.lossesChart = lossesChart;
-        const winPChart = this.winPChart();
-        data.winPChart = winPChart;
-        const mostWinsInSeason = this.mostWinsInSeason();
-        data.mostWinsInSeason = mostWinsInSeason;
-        const mostLossesInSeason = this.mostLossesInSeason();
-        data.mostLossesInSeason = mostLossesInSeason;
-        const averageWinsInSeason = this.averageWinsInSeason();
-        data.averageWinsInSeason = averageWinsInSeason;
-        const totalPointFor = this.totalPointsFor();
-        data.totalPointFor = totalPointFor;
-        const totalPointsAgainst = this.totalPointsAgainst();
-        data.totalPointsAgainst = totalPointsAgainst;
-        const averagePointsFor = this.averagePointsFor();
-        data.averagePointsFor = averagePointsFor;
-        const averagePointsAgainst = this.averagePointsAgainst();
-        data.averagePointsAgainst = averagePointsAgainst;
-        const ownerHighestGameScore = this.ownerHighestGameScore();
-        data.ownerHighestGameScore = ownerHighestGameScore;
-        const ownerLowestGameScore = this.ownerLowestGameScore();
-        data.ownerLowestGameScore = ownerLowestGameScore;
-        const ownerAverageGameScore = this.ownerAverageGameScore();
-        data.ownerAverageGameScore = ownerAverageGameScore;
-        const ownerMostSeasonPointsFor = this.ownerMostSeasonPointsFor();
-        data.ownerMostSeasonPointsFor = ownerMostSeasonPointsFor;
-        const ownerMinSeasonPointsFor = this.ownerMinSeasonPointsFor();
-        data.ownerMinSeasonPointsFor = ownerMinSeasonPointsFor;
+        data.winsChart = this.winsChart();
+        data.lossesChart = this.lossesChart();
+        data.winPChart = this.winPChart();
+        data.mostWinsInSeason = this.mostWinsInSeason();
+        data.mostLossesInSeason = this.mostLossesInSeason();
+        data.averageWinsInSeason = this.averageWinsInSeason();
+        data.totalPointFor = this.totalPointsFor();
+        data.totalPointsAgainst = this.totalPointsAgainst();
+        data.averagePointsFor = this.averagePointsFor();
+        data.averagePointsAgainst = this.averagePointsAgainst();
+        data.ownerHighestGameScore = this.ownerHighestGameScore();
+        data.ownerLowestGameScore = this.ownerLowestGameScore();
+        data.ownerAverageGameScore = this.ownerAverageGameScore();
+        data.ownerMostSeasonPointsFor = this.ownerMostSeasonPointsFor();
+        data.ownerMinSeasonPointsFor = this.ownerMinSeasonPointsFor();
+        data.championships = this.championships();
+        data.runnerUps = this.runnerUps();
+        data.totalLeaguePoints = this.totalLeaguePoints();
+        data.leaguePointsByYear = this.leaguePointsByYear();
     }
 }

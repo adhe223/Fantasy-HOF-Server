@@ -1,6 +1,7 @@
 .gradle
 /node_modules/
 bundle.js
+/out/
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 npm-debug.log

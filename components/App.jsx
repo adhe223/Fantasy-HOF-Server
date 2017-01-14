@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import BarChart from './BarChart';
 import MatchupPage from './MatchupPage';
 import MenuBar from './MenuBar';
+import LeaguePage from './LeaguePage';
 import WLPage from './WLPage';
 import PointsPage from './PointsPage';
 import DataRetrieval from '../src/js/DataRetrieval';
@@ -19,7 +20,7 @@ export default class App extends React.Component {
             page: Pages.default
         };
         this.leagueData = this.props.leagueData;
-        this.pageWidth = this.props.pageWidth;
+        this.pageWidth = this.props.pageWidth * 0.95;   // Give a little space around
         this.charts = {};
 
         let retriever = new DataRetrieval(this.leagueData);
@@ -37,6 +38,9 @@ export default class App extends React.Component {
         let content = null;
         switch(Pages.types[this.state.page]) {
             case Pages.types.Home:
+                break;
+            case Pages.types.League:
+                content = <LeaguePage charts={this.charts} chartWidth={this.pageWidth}/>
                 break;
             case Pages.types.WL:
                 content = <WLPage charts={this.charts} chartWidth={this.pageWidth}/>;
