@@ -49,7 +49,7 @@ class BarChart extends React.Component {
 
     render() {
         return (
-            <canvas id={this.props.chartName} width={this.props.chartWidth * 0.8} height={500} />
+            <canvas id={this.props.chartName} width={this.props.chartWidth} height={600} />
         );
     }
 }

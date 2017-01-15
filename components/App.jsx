@@ -56,7 +56,7 @@ export default class App extends React.Component {
         return(
             <div>
                 <div>
-                    <MenuBar value={ this.state.page } updateMethod={ this.updateApp } />
+                    <MenuBar value={this.state.page} updateMethod={this.updateApp} />
                 </div>
                 <div>
                     {content}
@@ -67,6 +67,6 @@ export default class App extends React.Component {
 }
 
 ReactDOM.render(
-    <App leagueData={ leagueData } pageWidth={ pageWidth }/>,
+    <App leagueData={leagueData} pageWidth={pageWidth}/>,
     document.getElementById("root")
 );
