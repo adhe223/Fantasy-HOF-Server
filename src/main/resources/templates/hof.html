@@ -10,7 +10,7 @@
         /*<![CDATA[*/
         const localStorageId ="fantasyHOFLeagueData";
         var leagueData;
-        if (localStorage.getItem(localStorageId) !== null && typeof localStorage.getItem(localStorageId) === 'object') {
+        if (localStorage.getItem(localStorageId) !== null) {
             leagueData = JSON.parse(localStorage.getItem(localStorageId));
         }
         /*]]>*/

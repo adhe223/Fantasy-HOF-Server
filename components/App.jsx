@@ -11,9 +11,6 @@ import Pages from '../src/js/Pages';
 
 const pageWidth = window.innerWidth;
 
-//Debugging
-leagueData = null;
-
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -22,9 +19,10 @@ export default class App extends React.Component {
         this.pageWidth = this.props.pageWidth * 0.95;   // Give a little space around
         let startPage;
 
-        // If we were able to retrieve the data from localStorage, skip the home page
-        if (leagueData) {
+        // If we were able to retrieve the data from localStorage, skip the home page and load the data
+        if (this.leagueData) {
             startPage = Pages.default;
+            this.retrieveData(this.leagueData, this.charts);
         } else {
             startPage = Pages.types.Home;
         }
@@ -36,6 +34,7 @@ export default class App extends React.Component {
 
         this.updateApp = this.updateApp.bind(this);
         this.updateData = this.updateData.bind(this);
+        this.retrieveData = this.retrieveData.bind(this);
     }
 
     // Pass this to the child menu bar component. When a button is pressed the child calls this method to update
@@ -47,10 +46,18 @@ export default class App extends React.Component {
     // the web server this method is called and we redraw.
     updateData(leagueData) {
         this.leagueData = leagueData;
-        let retriever = new DataRetrieval(this.leagueData);
-        retriever.generateAndStoreData(this.charts);
+        this.retrieveData(this.leagueData, this.charts);
+
+        // Cache the data in local storage
+        const localStorageId ="fantasyHOFLeagueData";
+        localStorage.setItem(localStorageId, JSON.stringify(leagueData));
 
         this.setState({page: Pages.default});
+    }
+
+    retrieveData(leagueData, charts) {
+        let retriever = new DataRetrieval(leagueData);
+        retriever.generateAndStoreData(charts);
     }
 
     render() {
