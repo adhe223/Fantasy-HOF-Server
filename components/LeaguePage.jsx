@@ -1,5 +1,6 @@
 import React from 'react';
 import Chart from './Chart';
+import css from './styles/leaguepage.css';
 
 class LeaguePage extends React.Component {
     constructor(props) {
@@ -17,7 +18,10 @@ class LeaguePage extends React.Component {
                 <Chart chartType="bar" chartName="runnerUps" chartLabels={this.charts.runnerUps.labels} chartDataset={this.charts.runnerUps.dataset} chartDatasetLabel={this.charts.runnerUps.datasetLabel} chartWidth={this.chartWidth}/>
                 <Chart chartType="line" chartName="leaguePointsByYear" chartLabels={this.charts.leaguePointsByYear.labels} chartDataset={this.charts.leaguePointsByYear.dataset} chartDatasetLabel={this.charts.leaguePointsByYear.datasetLabel} chartWidth={this.chartWidth}/>
                 <ul>
-                    <li key="totalLeaguePoints">Total League Points: {this.charts.totalLeaguePoints}</li>
+                    <li className="dataPoint" key="totalLeaguePoints">
+                        <span className="dataPointKey">Total League Points: </span>
+                        <span className="dataPointValue">{this.charts.totalLeaguePoints}</span>
+                    </li>
                 </ul>
             </div>
         );

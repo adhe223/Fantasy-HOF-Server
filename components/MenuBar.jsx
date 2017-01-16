@@ -6,16 +6,20 @@ import css from './styles/menubar.css';
 class MenuBar extends React.Component {
     constructor(props) {
         super(props);
-        this.value = this.props.value;
         this.updateMethod = this.props.updateMethod;
         this.clearMethod = this.props.clearMethod;
+        this.value = this.props.value;
+
+        this.state = {value: this.props.value};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleClear = this.handleClear.bind(this);
     }
 
     handleChange(event) {
-        this.updateMethod(Helpers.getKeyByValue(Pages.types, event.target.textContent));
+        const key = Helpers.getKeyByValue(Pages.types, event.target.textContent);
+        this.setState({value: key});
+        this.updateMethod(key);
     }
 
     handleClear() {
@@ -34,7 +38,7 @@ class MenuBar extends React.Component {
                 }
 
                 let activeClass = "";
-                if (this.value === page) {
+                if (this.state.value === page) {
                     activeClass = "active";
                 }
 

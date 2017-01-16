@@ -20,6 +20,7 @@ li.menuBarButton {
     text-decoration: none;
     border-right: 1px solid #949494;
     border-left: 1px solid #949494;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
 }
 
 li.right {
@@ -36,7 +37,7 @@ li.branding {
     color: white;
     font-family: 'Oswald', sans-serif;
     font-weight: bold;
-    font-size: x-large;
+    font-size: xx-large;
 }
 span.branding {
     vertical-align: middle;

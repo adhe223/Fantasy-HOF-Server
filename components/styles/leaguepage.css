@@ -1,0 +1,19 @@
+li.dataPoint {
+    list-style-type: none;
+    margin: 10px;
+}
+
+li.dataPoint span {
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+span.dataPointKey {
+    color: #a8161c;
+    font-weight: bold;
+    font-size: 34px;
+}
+
+span.dataPointValue {
+    padding: 20px 0;
+    font-size: 34px;
+}

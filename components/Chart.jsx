@@ -20,6 +20,12 @@ class Chart extends React.Component {
             borderColor = 'rgba(255,99,132,1)';
         }
 
+        let yAxes = true;
+        if (this.chartType === "doughnut" || this.chartType === "pie") {
+            // Disable scales for charts it doesn't make sense on
+            yAxes = false;
+        }
+
         this.chartData = {
             labels: chartLabels,
             datasets: [{
@@ -46,6 +52,7 @@ class Chart extends React.Component {
             },
             scales: {
                 yAxes: [{
+                    display: yAxes,
                     ticks: {
                         beginAtZero:true
                     }
@@ -55,7 +62,7 @@ class Chart extends React.Component {
     }
 
     componentDidMount() {
-        var ctx = document.getElementById(this.chartName);
+        let ctx = document.getElementById(this.chartName);
         this.myChart = new ChartJS(ctx, {
             type: this.chartType,
             data: this.chartData,
