@@ -20,6 +20,10 @@ li.menuBarButton {
     text-decoration: none;
 }
 
+li.right {
+    float: right;
+}
+
 li.menuBarButton:hover {
     background-color: #111;
 }

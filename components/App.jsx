@@ -17,6 +17,7 @@ export default class App extends React.Component {
         this.leagueData = this.props.leagueData;
         this.charts = {};
         this.pageWidth = this.props.pageWidth * 0.95;   // Give a little space around
+        this.localStorageId = "fantasyHOFLeagueData";
         let startPage;
 
         // If we were able to retrieve the data from localStorage, skip the home page and load the data
@@ -35,6 +36,7 @@ export default class App extends React.Component {
         this.updateApp = this.updateApp.bind(this);
         this.updateData = this.updateData.bind(this);
         this.retrieveData = this.retrieveData.bind(this);
+        this.clearData = this.clearData.bind(this);
     }
 
     // Pass this to the child menu bar component. When a button is pressed the child calls this method to update
@@ -49,10 +51,16 @@ export default class App extends React.Component {
         this.retrieveData(this.leagueData, this.charts);
 
         // Cache the data in local storage
-        const localStorageId ="fantasyHOFLeagueData";
-        localStorage.setItem(localStorageId, JSON.stringify(leagueData));
+        localStorage.setItem(this.localStorageId, JSON.stringify(leagueData));
 
         this.setState({page: Pages.default});
+    }
+
+    // Passed to the menu bar so that when the clear button is pressed we remove data from localStorage and go back to Home
+    clearData() {
+        this.leagueData = null;
+        localStorage.removeItem(this.localStorageId);
+        this.updateApp(Pages.types.Home);
     }
 
     retrieveData(leagueData, charts) {
@@ -85,7 +93,7 @@ export default class App extends React.Component {
             // We want the menubar if it isn't the home page
             content =
                 <div>
-                    <MenuBar value={this.state.page} updateMethod={this.updateApp} />
+                    <MenuBar value={this.state.page} updateMethod={this.updateApp} clearMethod={this.clearData} />
                     <div className="content" style={{marginTop: 50}}>
                         {content}
                     </div>
