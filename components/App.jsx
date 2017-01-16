@@ -11,10 +11,14 @@ import Pages from '../src/js/Pages';
 
 const pageWidth = window.innerWidth;
 
+//Debugging
+leagueData = null;
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.leagueData = this.props.leagueData;
+        this.charts = {};
         this.pageWidth = this.props.pageWidth * 0.95;   // Give a little space around
         let startPage;
 
@@ -29,10 +33,6 @@ export default class App extends React.Component {
             pages: Pages.types,
             page: startPage
         };
-        this.charts = {};
-
-        let retriever = new DataRetrieval(this.leagueData);
-        retriever.generateAndStoreData(this.charts);
 
         this.updateApp = this.updateApp.bind(this);
         this.updateData = this.updateData.bind(this);
@@ -46,6 +46,10 @@ export default class App extends React.Component {
     // Pass this to the input box component before we have the league data. When the data is successfully grabbed from
     // the web server this method is called and we redraw.
     updateData(leagueData) {
+        this.leagueData = leagueData;
+        let retriever = new DataRetrieval(this.leagueData);
+        retriever.generateAndStoreData(this.charts);
+
         this.setState({page: Pages.default});
     }
 

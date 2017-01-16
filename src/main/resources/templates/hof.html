@@ -12,13 +12,7 @@
         var leagueData;
         if (localStorage.getItem(localStorageId) !== null && typeof localStorage.getItem(localStorageId) === 'object') {
             leagueData = JSON.parse(localStorage.getItem(localStorageId));
-        } else {
-            leagueData = [[${leagueData}]];
-            localStorage.setItem(localStorageId, JSON.stringify(leagueData));
         }
-
-        // Debug
-        //leagueData = [[${leagueData}]];
         /*]]>*/
     </script>
     <script src="bundle.js"></script>

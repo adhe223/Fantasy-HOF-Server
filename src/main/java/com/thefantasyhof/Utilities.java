@@ -10,8 +10,8 @@ import java.net.URLConnection;
 public final class Utilities {
     private Utilities() {}
 
-    public static DataConsumer getLeagueData() {
-        String url = "https://agile-badlands-78491.herokuapp.com/getLeagueDataJSON?leagueId=44169";
+    public static DataConsumer getLeagueData(String leagueId) {
+        String url = "https://agile-badlands-78491.herokuapp.com/getLeagueDataJSON?leagueId=" + leagueId;
         String charset = "UTF-8";
 
         try {

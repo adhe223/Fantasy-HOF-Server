@@ -10,6 +10,7 @@ class InputBoxWithButton extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateAppData
     }
 
     handleChange(event) {
@@ -18,10 +19,13 @@ class InputBoxWithButton extends React.Component {
 
     handleSubmit(event) {
         $.ajax({
+            context: this,
             type: 'POST',
-            url: '/getLeagueDataJSON'
-        }).success(function(res) {
-            this.updateAppData(res);
+            url: '/getLeagueDataJSON',
+            data: $.param({leagueId: this.state.value}),
+            success: function(res) {
+                this.updateAppData(res);
+            }
         });
 
         event.preventDefault();
