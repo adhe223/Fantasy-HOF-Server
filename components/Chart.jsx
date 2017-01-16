@@ -11,14 +11,22 @@ class Chart extends React.Component {
         const chartLabels = this.props.chartLabels;
         const chartDataSet = this.props.chartDataset;
         const chartDatasetLabel = this.props.chartDatasetLabel;
+        let backgroundColor = this.props.backgroundColor;
+        let borderColor = this.props.borderColor;
+        if (!backgroundColor) {
+            backgroundColor = 'rgba(255, 99, 132, 0.2)';
+        }
+        if (!borderColor) {
+            borderColor = 'rgba(255,99,132,1)';
+        }
 
         this.chartData = {
             labels: chartLabels,
             datasets: [{
                 label: chartDatasetLabel,
                 data: chartDataSet,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255,99,132,1)',
+                backgroundColor: backgroundColor,
+                borderColor: borderColor,
                 borderWidth: 1
             }]
         };

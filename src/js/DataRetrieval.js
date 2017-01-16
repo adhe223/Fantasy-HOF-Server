@@ -31,6 +31,7 @@ export default class DataRetrieval {
 
         return new ChartData(labels, wins, '# of Wins');
     }
+
     lossesChart() {
         // Iterate over this.leagueDataRepo and put together the labels and data
         var objectsArr = [];
@@ -505,12 +506,14 @@ export default class DataRetrieval {
 
     generateAndStoreData(data) {
         data.winsChart = this.winsChart();
+        data.winShareChart = data.winsChart;
         data.lossesChart = this.lossesChart();
         data.winPChart = this.winPChart();
         data.mostWinsInSeason = this.mostWinsInSeason();
         data.mostLossesInSeason = this.mostLossesInSeason();
         data.averageWinsInSeason = this.averageWinsInSeason();
         data.totalPointFor = this.totalPointsFor();
+        data.totalPointsForShare = data.totalPointFor;
         data.totalPointsAgainst = this.totalPointsAgainst();
         data.averagePointsFor = this.averagePointsFor();
         data.averagePointsAgainst = this.averagePointsAgainst();
