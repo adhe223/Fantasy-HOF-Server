@@ -1,16 +1,16 @@
 import React from 'react';
 import Chart from 'chart.js';
+import css from './styles/barchart.css';
 
 class BarChart extends React.Component {
     constructor(props) {
         super(props);
-
-        this.chartData = null;
-        this.options = null;
-
+        this.chartName = this.props.chartName;
+        this.chartWidth = this.props.chartWidth;
         const chartLabels = this.props.chartLabels;
         const chartDataSet = this.props.chartDataset;
         const chartDatasetLabel = this.props.chartDatasetLabel;
+
         this.chartData = {
             labels: chartLabels,
             datasets: [{
@@ -24,6 +24,17 @@ class BarChart extends React.Component {
         this.options ={
             responsive: false,
             maintainAspectRatio: true,
+            title: {
+                display: true,
+                text: chartDatasetLabel,
+                fontSize: 32,
+                fontFamily: "'Tahoma', 'Geneva', 'sans-serif'",
+                fontStyle: 'bold',
+                padding: 12
+            },
+            legend: {
+                display: false
+            },
             scales: {
                 yAxes: [{
                     ticks: {
@@ -35,7 +46,7 @@ class BarChart extends React.Component {
     }
 
     componentDidMount() {
-        var ctx = document.getElementById(this.props.chartName);
+        var ctx = document.getElementById(this.chartName);
         this.myBarChart = new Chart(ctx, {
             type: 'bar',
             data: this.chartData,
@@ -49,7 +60,7 @@ class BarChart extends React.Component {
 
     render() {
         return (
-            <canvas id={this.props.chartName} width={this.props.chartWidth} height={600} />
+            <canvas className="bar-chart" id={this.chartName} width={this.chartWidth * 0.9} height={600} />
         );
     }
 }

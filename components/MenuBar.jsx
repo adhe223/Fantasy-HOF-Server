@@ -46,6 +46,12 @@ class MenuBar extends React.Component {
             }
         }
 
+        // Add the branding
+        elemList.push(
+            <li key={'Branding'} className={'branding'}>
+                <span className="branding">The Fantasy Hall of Fame</span>
+            </li>);
+
         // Add the clear button
         elemList.push(
             <li key={'Clear'} className={'menuBarButton right'} onClick={this.handleClear}>

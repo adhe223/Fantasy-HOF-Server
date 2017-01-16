@@ -11,8 +11,8 @@ class Loading extends React.Component {
             <div>
                 <div className="overlay"></div>
                 <div className="loading-container">
-                    <object data="gears.svg" type="image/svg+xml">
-                        <img src="gears.gif" />
+                    <object data="/images/gears.svg" type="image/svg+xml">
+                        <img src="/images/gears.gif" />
                     </object>
                 </div>
             </div>

@@ -18,6 +18,8 @@ li.menuBarButton {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    border-right: 1px solid #949494;
+    border-left: 1px solid #949494;
 }
 
 li.right {
@@ -26,6 +28,18 @@ li.right {
 
 li.menuBarButton:hover {
     background-color: #111;
+}
+
+li.branding {
+    position: absolute;
+    margin-left: calc(100% / 2);
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    font-size: x-large;
+}
+span.branding {
+    vertical-align: middle;
 }
 
 li.active, li.active:hover {

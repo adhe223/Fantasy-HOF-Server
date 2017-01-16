@@ -36,7 +36,7 @@ export default class App extends React.Component {
         this.updateApp = this.updateApp.bind(this);
         this.updateData = this.updateData.bind(this);
         this.retrieveData = this.retrieveData.bind(this);
-        this.clearData = this.clearData.bind(this);
+        this.clearData = this.clearData.bind(this)
     }
 
     // Pass this to the child menu bar component. When a button is pressed the child calls this method to update
@@ -94,7 +94,7 @@ export default class App extends React.Component {
             content =
                 <div>
                     <MenuBar value={this.state.page} updateMethod={this.updateApp} clearMethod={this.clearData} />
-                    <div className="content" style={{marginTop: 50}}>
+                    <div className="content" style={{marginTop: 65}}>
                         {content}
                     </div>
                 </div>;

@@ -1,4 +1,5 @@
 import React from 'react';
+import css from './styles/select.css';
 
 class SelectForm extends React.Component {
     constructor(props) {

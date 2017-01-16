@@ -1,4 +1,5 @@
 import React from 'react';
+import css from './styles/table.css';
 
 class Table extends React.Component {
     constructor(props) {
@@ -8,12 +9,12 @@ class Table extends React.Component {
     render() {
         const headings = this.props.headings;
         const data = this.props.data;
-        var tableData = [];
-        var elemIndex = 1;
+        let tableData = [];
+        let elemIndex = 1;
 
         // Table Headings
-        var headingsRow = [];
-        for (var i = 0; i < headings.length; i++) {
+        let headingsRow = [];
+        for (let i = 0; i < headings.length; i++) {
             headingsRow.push(
                 <th key={ elemIndex }>{ headings[i] }</th>
             );
@@ -24,9 +25,9 @@ class Table extends React.Component {
         elemIndex++;
 
         // Table data. Each array in data is a row
-        for (var row = 0; row < data.length; row++) {
-            var tableRow = [];
-            for (var col = 0; col < data[row].length; col++) {
+        for (let row = 0; row < data.length; row++) {
+            let tableRow = [];
+            for (let col = 0; col < data[row].length; col++) {
                 tableRow.push(
                     <td key={ elemIndex }>{ data[row][col] }</td>
                 );
