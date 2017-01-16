@@ -4,6 +4,10 @@ ul.menuBar {
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
 }
 
 li.menuBarButton {
@@ -20,6 +24,6 @@ li.menuBarButton:hover {
     background-color: #111;
 }
 
-li.active {
-    background-color: #4CAF50;
+li.active, li.active:hover {
+    background-color: rgba(255, 0, 0, 0.5);
 }

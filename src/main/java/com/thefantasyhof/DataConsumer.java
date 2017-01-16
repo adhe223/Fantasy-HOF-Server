@@ -9,15 +9,15 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class DataConsumer {
-    private JSONObject json;
+    private transient JSONObject json;
     private Map<String, Owner> owners = new HashMap<String, Owner>();
     private Map<String, LeagueSeason> seasons = new HashMap<String, LeagueSeason>();
-    private ArrayList<WLSuperlative> allTimeMostWinsInSeason = new ArrayList<>();
-    private ArrayList<WLSuperlative> allTimeMostLossesInSeason = new ArrayList<>();
-    private ArrayList<PointsSuperlative> allTimeHighestSeasonScoreTeams = new ArrayList<>();
-    private ArrayList<PointsSuperlative> allTimeLowestSeasonScoreTeams = new ArrayList<>();
-    private ArrayList<PointsSuperlative> allTimeHighestMatchupScoreTeams = new ArrayList<>();
-    private ArrayList<PointsSuperlative> allTimeLowestMatchupScoreTeams = new ArrayList<>();
+    private transient ArrayList<WLSuperlative> allTimeMostWinsInSeason = new ArrayList<>();
+    private transient ArrayList<WLSuperlative> allTimeMostLossesInSeason = new ArrayList<>();
+    private transient ArrayList<PointsSuperlative> allTimeHighestSeasonScoreTeams = new ArrayList<>();
+    private transient ArrayList<PointsSuperlative> allTimeLowestSeasonScoreTeams = new ArrayList<>();
+    private transient ArrayList<PointsSuperlative> allTimeHighestMatchupScoreTeams = new ArrayList<>();
+    private transient ArrayList<PointsSuperlative> allTimeLowestMatchupScoreTeams = new ArrayList<>();
 
     //<editor-fold desc="Getters/Setters">
     public JSONObject getJson() {
