@@ -1,12 +1,13 @@
 import React from 'react';
-import Chart from 'chart.js';
-import css from './styles/barchart.css';
+import ChartJS from 'chart.js';
+import css from './styles/chart.css';
 
-class BarChart extends React.Component {
+class Chart extends React.Component {
     constructor(props) {
         super(props);
         this.chartName = this.props.chartName;
         this.chartWidth = this.props.chartWidth;
+        this.chartType = this.props.chartType;
         const chartLabels = this.props.chartLabels;
         const chartDataSet = this.props.chartDataset;
         const chartDatasetLabel = this.props.chartDatasetLabel;
@@ -47,22 +48,22 @@ class BarChart extends React.Component {
 
     componentDidMount() {
         var ctx = document.getElementById(this.chartName);
-        this.myBarChart = new Chart(ctx, {
-            type: 'bar',
+        this.myChart = new ChartJS(ctx, {
+            type: this.chartType,
             data: this.chartData,
             options: this.options
         });
     }
 
     componentWillUnmount() {
-        this.myBarChart.destroy();
+        this.myChart.destroy();
     }
 
     render() {
         return (
-            <canvas className="bar-chart" id={this.chartName} width={this.chartWidth * 0.9} height={600} />
+            <canvas className="chart" id={this.chartName} width={this.chartWidth * 0.9} height={600} />
         );
     }
 }
 
-export default BarChart;
+export default Chart;
