@@ -20,6 +20,13 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'com.moowork.node'
 
+node {
+	version = '4.4.2'
+	npmVersion = '2.15.0'
+	distBaseUrl = 'https://nodejs.org/dist'
+	download = true
+}
+
 jar {
 	baseName = 'hofwebserver'
 	version = '0.0.1-SNAPSHOT'
