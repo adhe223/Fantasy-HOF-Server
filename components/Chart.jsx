@@ -63,6 +63,11 @@ class Chart extends React.Component {
                     ticks: {
                         beginAtZero:true
                     }
+                }],
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false
+                    }
                 }]
             }
         };
