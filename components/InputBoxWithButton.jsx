@@ -1,10 +1,9 @@
 import React from 'react';
-import $ from 'jquery';
+import css from './styles/inputbox.css';
 
 class InputBoxWithButton extends React.Component {
     constructor(props) {
         super(props);
-        this.labelText = this.props.labelText;
         this.submitMethod = this.props.submitMethod;
 
         this.state = {value: ''};
@@ -23,13 +22,10 @@ class InputBoxWithButton extends React.Component {
     
     render() {
         return(
-            <div>
+            <div className="form-div">
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        {this.labelText}
-                        <input type="text" value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <input type="submit" value="Go!" />
+                    <input className="no-select" type="text" value={this.state.value} placeholder="Enter your ESPN League ID" onChange={this.handleChange} />
+                    <input className="submit-button" type="submit" value="Go!" />
                 </form>
             </div>
         );

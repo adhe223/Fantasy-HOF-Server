@@ -108,7 +108,7 @@ export default class DataRetrieval {
             mostWinsInSeason.push(objectsArr[i].mostWinsInSeason);
         }
 
-        return new ChartData(labels, mostWinsInSeason, 'Most Wins In Season');
+        return new ChartData(labels, mostWinsInSeason, 'Most Wins In Season By Owner');
     }
     mostLossesInSeason() {
         // Iterate over this.leagueDataRepo and put together the labels and data
@@ -134,7 +134,7 @@ export default class DataRetrieval {
             mostLossesInSeason.push(objectsArr[i].mostLossesInSeason);
         }
 
-        return new ChartData(labels, mostLossesInSeason, 'Most Losses In Season');
+        return new ChartData(labels, mostLossesInSeason, 'Most Losses In Season By Owner');
     }
     averageWinsInSeason() {
         // Iterate over this.leagueDataRepo and put together the labels and data
@@ -290,7 +290,7 @@ export default class DataRetrieval {
             ownerHighestGameScore.push(objectsArr[i].ownerHighestGameScore);
         }
 
-        return new ChartData(labels, ownerHighestGameScore, 'Highest Game Score Per Owner');
+        return new ChartData(labels, ownerHighestGameScore, 'Highest Game Score By Owner');
     }
     ownerLowestGameScore() {
         // Iterate over this.leagueDataRepo and put together the labels and data
@@ -316,7 +316,7 @@ export default class DataRetrieval {
             ownerLowestGameScore.push(objectsArr[i].ownerLowestGameScore);
         }
 
-        return new ChartData(labels, ownerLowestGameScore, 'Lowest Game Score Per Owner');
+        return new ChartData(labels, ownerLowestGameScore, 'Lowest Game Score By Owner');
     }
     ownerMostSeasonPointsFor() {
         // Iterate over this.leagueDataRepo and put together the labels and data

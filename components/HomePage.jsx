@@ -2,6 +2,7 @@ import React from 'react';
 import InputBoxWithButton from './InputBoxWithButton';
 import Loading from './Loading';
 import $ from 'jquery';
+import css from './styles/homepage.css';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -35,9 +36,12 @@ class HomePage extends React.Component {
         }
 
         return(
-            <div>
+            <div className="back" width="100%" height="100%" style={{backgroundColor: '#7a7a7a'}}>
                 {loading}
-                <InputBoxWithButton submitMethod={this.handleSubmit} labelText="ESPN League ID: " />
+                <object className="picture" data="/images/trophy.svg" type="image/svg+xml">
+                    <img src="/images/trophy.png" />
+                </object>
+                <InputBoxWithButton submitMethod={this.handleSubmit} />
             </div>
         );
     }

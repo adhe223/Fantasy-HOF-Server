@@ -16,4 +16,6 @@ span.dataPointKey {
 span.dataPointValue {
     padding: 20px 0;
     font-size: 34px;
+    color: #333333;
+    font-weight: bold;
 }

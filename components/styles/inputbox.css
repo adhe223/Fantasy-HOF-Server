@@ -1,0 +1,62 @@
+div.form-div {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 605px;
+    height: 105px;
+    margin-top: -50px;
+    margin-left: -300px;
+    background-color: #c9c9c9;
+    border-radius: 10px;
+    border: 2px solid #c9c9c9;
+
+}
+
+input[type="text"] {
+    padding: 20px;
+    border: none;
+    border-bottom: solid 2px #c9c9c9;
+    transition: border 0.3s;
+    width: 380px;
+    height: 80px;
+    margin: 10px;
+    float: left;
+    font-size: 25px;
+    color: #333333;
+    text-align: center;
+}
+
+input[type="text"]:focus, input[type="text"].focus {
+    border-bottom: solid 2px #969696;
+}
+
+.submit-button {
+    -moz-box-shadow:inset 0px 39px 0px -24px #e67a73;
+    -webkit-box-shadow:inset 0px 39px 0px -24px #e67a73;
+    box-shadow:inset 0px 39px 0px -24px #e67a73;
+    background-color:#e4685d;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
+    border:1px solid #ffffff;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    padding:6px 15px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #b23e35;
+    margin: 10px;
+    height: 80px;
+    width: 180px;
+    font-size: 30px;
+}
+
+.submit-button:hover {
+    background-color:#eb675e;
+}
+.submit-button:active {
+    position:relative;
+    top:1px;
+}
+

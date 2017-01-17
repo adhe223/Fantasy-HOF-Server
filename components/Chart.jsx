@@ -2,6 +2,8 @@ import React from 'react';
 import ChartJS from 'chart.js';
 import css from './styles/chart.css';
 
+ChartJS.defaults.global.defaultFontSize = 16;
+
 class Chart extends React.Component {
     constructor(props) {
         super(props);
@@ -21,9 +23,13 @@ class Chart extends React.Component {
         }
 
         let yAxes = true;
+        let legend = false;
         if (this.chartType === "doughnut" || this.chartType === "pie") {
             // Disable scales for charts it doesn't make sense on
             yAxes = false;
+
+            // Enable the legend
+            legend = true;
         }
 
         this.chartData = {
@@ -48,7 +54,8 @@ class Chart extends React.Component {
                 padding: 12
             },
             legend: {
-                display: false
+                display: legend,
+                position: 'left'
             },
             scales: {
                 yAxes: [{
