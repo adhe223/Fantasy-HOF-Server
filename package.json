@@ -24,6 +24,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run clean:js && webpack",
     "build-prod": "npm run clean:js && webpack -p",
+    "heroku-postbuild": "npm run clean:js && webpack -p",
     "clean:js": "del-cli src/main/resources/static/bundle.js"
   },
   "author": "Alex Henry",
