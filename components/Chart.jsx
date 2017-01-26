@@ -2,8 +2,6 @@ import React from 'react';
 import ChartJS from 'chart.js';
 import css from './styles/chart.css';
 
-ChartJS.defaults.global.defaultFontSize = 16;
-
 class Chart extends React.Component {
     constructor(props) {
         super(props);

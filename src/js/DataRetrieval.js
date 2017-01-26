@@ -209,8 +209,7 @@ export default class DataRetrieval {
         var pointsAgainst = [];
         for (var i = 0; i < objectsArr.length; i++) {
             labels.push(objectsArr[i].owner);
-            pointsAgainst.push(objectsArr[i].pointsAgainst);
-        }
+            pointsAgainst.push(objectsArr[i].pointsAgainst);}
 
         return new ChartData(labels, pointsAgainst, 'Total # of Points Against');
     }
@@ -503,6 +502,39 @@ export default class DataRetrieval {
 
         return new ChartData(labels, points, 'Total League Points by Season');
     }
+    ownerSeasons() {
+        let objectsArr = [];
+        let ownerSeasonsData = {};
+        for (let owner in this.leagueDataRepo.owners) {
+            if (this.leagueDataRepo.owners.hasOwnProperty(owner)) {
+                ownerSeasonsData[owner] = Object.keys(this.leagueDataRepo.owners[owner].seasons).length;
+            }
+        }
+
+        // Populate objectArr that we'll use to sort the results
+        for (let key in ownerSeasonsData) {
+            if (ownerSeasonsData.hasOwnProperty(key)) {
+                objectsArr.push({
+                    owner: key,
+                    seasons: ownerSeasonsData[key]
+                });
+            }
+        }
+
+        // Sort and build datasets
+        objectsArr.sort(function(a, b) {
+            return b.seasons - a.seasons;
+        });
+
+        let labels = [];
+        let ownerSeasons = [];
+        for (let i = 0; i < objectsArr.length; i++) {
+            labels.push(objectsArr[i].owner);
+            ownerSeasons.push(objectsArr[i].seasons);
+        }
+
+        return new ChartData(labels, ownerSeasons, 'Owner Seasons');
+    }
 
     generateAndStoreData(data) {
         data.winsChart = this.winsChart();
@@ -526,5 +558,6 @@ export default class DataRetrieval {
         data.runnerUps = this.runnerUps();
         data.totalLeaguePoints = this.totalLeaguePoints();
         data.leaguePointsByYear = this.leaguePointsByYear();
+        data.ownerSeasons = this.ownerSeasons();
     }
 }
